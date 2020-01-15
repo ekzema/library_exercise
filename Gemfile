@@ -39,6 +39,10 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # My gems
 gem 'mongoid', '~> 6.0'
 gem 'bson_ext'
+gem 'twitter-bootstrap-rails', '~> 4.0'
+gem 'russian', '~> 0.6.0'
+gem 'will_paginate', '~> 3.2', '>= 3.2.1'
+gem 'jquery-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
