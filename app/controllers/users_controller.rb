@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.order(:name)
+    @users = User.order(:name => 'desc')
   end
 
   # GET /users/1
@@ -25,10 +25,9 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: "Пользователь #{@user.name} был успешно создан." }
+        format.html { redirect_to new_user_path, notice: "Пользователь #{@user.name} был успешно создан." }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
