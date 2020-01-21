@@ -2,7 +2,7 @@ class User
   include BCrypt
   include ActiveModel::Validations
   include Mongoid::Document
-
+  has_many :books
   validates :name, presence: true, uniqueness: true
   validates :password, confirmation: true
   field :name, type: String
