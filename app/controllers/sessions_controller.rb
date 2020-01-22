@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
     user = User.find_by(name: params[:name])
     if user and user.authenticate(params[:password])
       session[:user_id] = user.id.to_s
+      session[:role] = user.role
       redirect_to '/'
     else
       redirect_to login_url, alert: "Invalid user/password combination"

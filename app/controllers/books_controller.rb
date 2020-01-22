@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :check_rule, only: [:new, :edit, :update, :destroy]
   skip_before_action :authorize, only: [:index, :show]
   # GET /books
   # GET /books.json
@@ -61,13 +62,18 @@ class BooksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_book
-      @book = Book.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def book_params
-      params.require(:book).permit(:name, :description, :author, :status, :user_id)
-    end
+  def check_rule
+    redirect_to '/', notice: "Увас нет прав на это действие" unless  current_user.role == 'admin'
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_book
+    @book = Book.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def book_params
+    params.require(:book).permit(:name, :description, :author, :status, :user_id)
+  end
 end
