@@ -61,6 +61,13 @@ class BooksController < ApplicationController
     end
   end
 
+  def take
+    book = Book.find(params[:id])
+    redirect_back(fallback_location: root_path, notice: 'Book not found.') if book.nil?
+    History.create(user_id: current_user.id, book_id: params[:id], taken: '', returned: '')
+    redirect_back fallback_location: root_path, notice: 'Success.'
+  end
+
   private
 
   def check_rule

@@ -26,6 +26,7 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id
+    @comment.book_id = params[:book_id]
     respond_to do |format|
       if @comment.save
         format.html { redirect_to book_path(params[:book_id]), notice: 'Comment was successfully created.' }

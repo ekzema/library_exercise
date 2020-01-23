@@ -3,6 +3,9 @@
 <%= link_to 'Edit', edit_book_path(@book)  if user_is_admin? %> |
 <%= link_to 'Back', books_path %>
 
+<% if user_signed_in? %>
+  <%= link_to 'Take', take_book_path(@book.id), class: 'btn btn-success', method: 'post' %>
+<% end %>
 <p>
   <strong>Name:</strong>
   <%= @book.name %>
@@ -38,3 +41,5 @@
     <%= form.submit %>
   </div>
 <% end %>
+
+<h3>History:</h3>
