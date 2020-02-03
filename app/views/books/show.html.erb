@@ -4,7 +4,11 @@
 <%= link_to 'Back', books_path %>
 
 <% if user_signed_in? %>
-  <%= link_to 'Take', take_book_path(@book.id), class: 'btn btn-success', method: 'post' %>
+  <% if book_is_taken?(@book.id) %>
+    <%= link_to 'Return', return_book_path(@book.id), class: 'btn btn-success', method: 'put' %>
+  <% else %>
+    <%= link_to 'Take', take_book_path(@book.id), class: 'btn btn-success', method: 'post' %>
+  <% end %>
 <% end %>
 <p>
   <strong>Name:</strong>
@@ -27,8 +31,8 @@
 </p>
 <h3>Comments</h3>
 <% @book.comments.each do |comments| %>
+  <h3><%= comments.user.name %></h3>
   <p><%= comments.text %></p>
-
 <% end %>
 <h3>Add comment</h3>
 <%= form_with(model: Comment.new, local: true) do |form| %>

@@ -63,8 +63,17 @@ class BooksController < ApplicationController
 
   def take
     book = Book.find(params[:id])
+    history = History.find_by({book_id: params[:id], user_id: current_user.id, returned: nil})
     redirect_back(fallback_location: root_path, notice: 'Book not found.') if book.nil?
-    History.create(user_id: current_user.id, book_id: params[:id], taken: '', returned: '')
+    redirect_back(fallback_location: root_path, notice: 'Book is already taken by you.') unless history.nil?
+    History.create(user_id: current_user.id, book_id: params[:id], taken: Time.current, returned: '')
+    redirect_back fallback_location: root_path, notice: 'Success.'
+  end
+
+  def return_book
+    history = History.find_by({book_id: params[:id], user_id: current_user.id, returned: nil})
+    redirect_back(fallback_location: root_path, notice: 'History not found.') if history.nil?
+    history.update(returned: Time.current)
     redirect_back fallback_location: root_path, notice: 'Success.'
   end
 
